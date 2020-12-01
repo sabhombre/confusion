@@ -26,41 +26,43 @@ function About(props) {
         )
     }
 
-
-    const leaders = 
-        <Stagger in>
-            {   props.leaders.leaders.map((leader) => {
-                    return(
-                        <Fade in>
-                        <RenderLeader leader={leader} />
-                        </Fade>
-                    );
-                })
-            }
-        </Stagger>
-    
-
-    if (props.leaders.isLoading) {
-        return(
-            <div className="container">
-                <div className="row">            
-                    <Loading />
-                </div>
-            </div>
-        );
-    }
-    else if (props.leaders.errMess) {
-        return(
-            <div className="container">
-                <div className="row"> 
-                    <div className="col-12">
-                        <h4>{props.leaders.errMess}</h4>
+    function RenderLeaders() {
+        if (props.leaders.isLoading) {
+            return(
+                <div className="container">
+                    <div className="row">            
+                        <Loading />
                     </div>
                 </div>
-            </div>
-        );
+            );
+        }
+        else if (props.leaders.errMess) {
+            return(
+                <div className="container">
+                    <div className="row"> 
+                        <div className="col-12">
+                            <h4>{props.leaders.errMess}</h4>
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+        else{
+            return(
+                <Stagger in>
+                {   props.leaders.leaders.map((leader) => {
+                        return(
+                            <Fade in>
+                            <RenderLeader leader={leader} key={leader.id} />
+                            </Fade>
+                        );
+                    })
+                }
+                </Stagger>
+            );
+        }
     }
-    else
+
     return (
         <div className="container">
             <div className="row">
@@ -116,7 +118,7 @@ function About(props) {
                     <h2>Corporate Leadership</h2>
                 </div>
                 <div className="col-12">
-                    {leaders}
+                    <RenderLeaders />
                 </div>
             </div>
         </div>
